@@ -1,0 +1,50 @@
+
+layer=active.proxy.layerByName("0")
+doc=active.document()
+bobj=Builder(doc)
+
+--variables
+--top of table
+l,w,h=350,500,10
+--legs
+ll,wl,hl=35,35,70
+--starting Coords
+rx,ry=10,10
+
+
+
+--Function for Rectangle/Sqaure x,y are starting Coordinates and xl and yl are length/breadth along x and y respectively 
+
+function rectangle(x,y,xl,yl)
+
+--x=x-1000
+
+line1 = Line(Coord(x,y),Coord(x+xl,y),layer)
+line2 = Line(Coord(x+xl,y),Coord(x+xl,y+yl),layer)
+line3 = Line(Coord(x+xl,y+yl),Coord(x,y+yl),layer)
+line4 = Line(Coord(x,y+yl),Coord(x,y),layer)
+
+bobj:append(line1):append(line2):append(line3):append(line4):execute()
+end
+
+--function to create table 
+
+function maketable(l,w,h,ll,wl,hl)
+
+--top view
+rectangle(rx,ry,w,l)
+
+
+--front view
+rectangle(rx,ry+l+100,w,h)
+rectangle(rx,ry+l+100+h,ll,hl)
+rectangle(rx+w-ll,ry+l+100+h,ll,hl)
+
+--side view
+rectangle(rx+w+200,ry+l+100,l,h)
+rectangle(rx+w+200,ry+l+100+h,wl,hl)
+rectangle(rx+w+200+l-wl,ry+l+100+h,wl,hl)
+
+end
+
+maketable(l,w,h,ll,wl,hl)
